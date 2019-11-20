@@ -29,7 +29,6 @@ import java.io.File;
 public class MainActivity extends AppCompatActivity {
 
     ImageView mImageView;
-    ImageView mImageView2;
     TextView mResultTv;
     Button mChooseBtn;
 
@@ -43,16 +42,11 @@ public class MainActivity extends AppCompatActivity {
 
         mResultTv = findViewById(R.id.resultTv);
         mImageView = findViewById(R.id.imageView);
-        mImageView2 = findViewById(R.id.imageView);
         mChooseBtn = findViewById(R.id.choose_image_btn);
-
-        mImageView.setDrawingCacheEnabled(true);
-        mImageView.buildDrawingCache(true);
 
         mChooseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
 
@@ -87,9 +81,10 @@ public class MainActivity extends AppCompatActivity {
 
                         String hex = "#" + Integer.toHexString(pixel);
 
-                        String color = getComplementaryColor(pixel);
+                        Model color = new Model();
+                        String colors = color.getComplementaryColor(pixel);
 
-                        mResultTv.setText("RGB: " + r + "," + g + "," + b + "\nHEX: " + hex + "\nColor: " + color);
+                        mResultTv.setText("RGB: " + r + "," + g + "," + b + "\nHEX: " + hex + "\nColor: " + colors);
 
                     }
                 }catch (Exception e) {
@@ -99,51 +94,7 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
 
-            public String getComplementaryColor(int colorToInvert) {
-                String name = "";
-                float hsv[] = new float[3];
-                int r = (colorToInvert >> 16) & 0xFF;
-                int g = (colorToInvert >> 8) & 0xFF;
-                int b = (colorToInvert) & 0xFF;
-                Color.RGBToHSV(r, g, b, hsv);
-
-                if (hsv[1] < 0.1 && hsv[2] > 0.9) {
-                    name = "White";
-                } else if (hsv[2] < 0.1) {
-                    name = "Black";
-                } else {
-                    float deg = hsv[0];
-
-                    if (deg >= 0 && deg < 15) {
-                        name = "Red";
-                    } else if (deg >= 15 && deg < 45) {
-                        name = "Orange";
-                    } else if (deg >= 45 && deg < 65) {
-                        name = "Yellow";
-                    } else if (deg >= 65 && deg < 180) {
-                        name = "Green";
-                    } else if (deg >= 180 && deg < 210) {
-                        name = "Cyan";
-                    } else if (deg >= 210 && deg < 270) {
-                        name = "Blue";
-                    } else if (deg >= 270 && deg < 300) {
-                        name = "Purple";
-                    } else if (deg >= 300 && deg < 330) {
-                        name = "Pink";
-                    } else {
-                        name = "Red";
-                    }
-                }
-
-                return name;
-            }
-
         });
-
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("message");
-
-        myRef.setValue("Hello, World!");
 
     }
 
