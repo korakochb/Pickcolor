@@ -31,6 +31,8 @@ public class  MainActivity extends AppCompatActivity {
     ImageView mImageView;
     TextView mResultTv;
     Button mChooseBtn;
+    DatabaseReference reff;
+    Model model;
 
     private static final int IMAGE_PICK_CODE = 1000;
     private static final int PERMISSION_CODE = 1001;
@@ -43,6 +45,8 @@ public class  MainActivity extends AppCompatActivity {
         mResultTv = findViewById(R.id.resultTv);
         mImageView = findViewById(R.id.imageView);
         mChooseBtn = findViewById(R.id.choose_image_btn);
+        reff = FirebaseDatabase.getInstance().getReference().child("Model");
+        model= new Model();
 
         mChooseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,7 +72,6 @@ public class  MainActivity extends AppCompatActivity {
 
             @Override
             public boolean onTouch (View v, MotionEvent event) {
-
                 try {
                     if (event.getAction() == MotionEvent.ACTION_DOWN || event.getAction() == MotionEvent.ACTION_MOVE) {
                         BitmapDrawable drawable = (BitmapDrawable) mImageView.getDrawable();
@@ -84,6 +87,13 @@ public class  MainActivity extends AppCompatActivity {
                         Model color = new Model();
                         String colors = color.getComplementaryColor(pixel);
 
+                        model.setRed(Color.red(pixel));
+                        model.setGreen(Color.green(pixel));
+                        model.setBlue(Color.blue(pixel));
+                        model.setHex("#" + Integer.toHexString(pixel));
+                        reff.push().setValue(model);
+                        Toast.makeText(MainActivity.this,"data inserted successfully",Toast.LENGTH_LONG).show();
+
                         mResultTv.setText("RGB: " + r + "," + g + "," + b + "\nHEX: " + hex + "\nColor: " + colors);
 
                     }
@@ -95,6 +105,7 @@ public class  MainActivity extends AppCompatActivity {
             }
 
         });
+
 
     }
 

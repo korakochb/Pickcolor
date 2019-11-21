@@ -3,7 +3,48 @@ package com.example.pickcolor;
 import android.graphics.Color;
 
 
-public class Model extends MainActivity {
+
+public class Model  {
+
+    private String hex;
+    private int red;
+    private int green;
+    private int blue;
+
+    public Model() {
+    }
+
+    public String getHex() {
+        return hex;
+    }
+
+    public void setHex(String hex) {
+        this.hex = hex;
+    }
+
+    public int getRed() {
+        return red;
+    }
+
+    public void setRed(int red) {
+        this.red = red;
+    }
+
+    public int getGreen() {
+        return green;
+    }
+
+    public void setGreen(int green) {
+        this.green = green;
+    }
+
+    public int getBlue() {
+        return blue;
+    }
+
+    public void setBlue(int blue) {
+        this.blue = blue;
+    }
 
     public String getComplementaryColor(int colorToInvert) {
         String name = "";
