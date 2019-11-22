@@ -37,7 +37,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
-                android:text="Hex: \nRGB: \nColor: "
+                android:text="RGB: \nColor: "
                 android:textColor="#000"
                 android:textSize="18sp"
                 android:layout_below="@id/choose_image_btn" />
