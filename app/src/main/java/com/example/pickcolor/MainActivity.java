@@ -77,18 +77,18 @@ public class  MainActivity extends AppCompatActivity {
                     if (event.getAction() == MotionEvent.ACTION_DOWN || event.getAction() == MotionEvent.ACTION_MOVE) {
                         BitmapDrawable drawable = (BitmapDrawable) mImageView.getDrawable();
                         Bitmap bitmap = drawable.getBitmap();
-                        Model color = new Model();
                         model.setX((int)event.getX());
                         model.setY((int)event.getY());
                         model.setPixel(bitmap.getPixel(model.getX(),model.getY()));
                         model.setRed(Color.red(model.getPixel()));
                         model.setGreen(Color.green(model.getPixel()));
                         model.setBlue(Color.blue(model.getPixel()));
-                        model.setColor(color.getComplementaryColor(model.getPixel()));
+                        Model color = new Model();
+                        model.setColor(color.getColorNameFromRgb(model.getRed(),model.getGreen(),model.getBlue()));
                         reff.push().setValue(model);
                         Toast.makeText(MainActivity.this,"Data Inserted Successfully",Toast.LENGTH_LONG).show();
 
-                        mResultTv.setText("RGB: " + model.getRed() + "," + model.getGreen() + "," + model.getBlue() + "\nColor: " + model.getColor() + "\n" );
+                        mResultTv.setText("RGB: " + model.getRed() + "," + model.getGreen() + "," + model.getBlue() + "\nColor: " + model.getColor());
 
                     }
                 }catch (Exception e) {
