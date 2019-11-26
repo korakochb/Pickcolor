@@ -3,8 +3,6 @@ package com.example.pickcolor;
 import android.graphics.Color;
 import java.util.ArrayList;
 
-
-
 public class Model  {
 
     private int red;
@@ -74,6 +72,7 @@ public class Model  {
         this.pixel = pixel;
     }
 
+    //Color list
     private ArrayList<ColorName> initColorList() {
         ArrayList<ColorName> colorList = new ArrayList<ColorName>();
         colorList.add(new ColorName("AliceBlue", 0xF0, 0xF8, 0xFF));
