@@ -14,6 +14,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -76,25 +77,18 @@ public class  MainActivity extends AppCompatActivity {
                     if (event.getAction() == MotionEvent.ACTION_DOWN || event.getAction() == MotionEvent.ACTION_MOVE) {
                         BitmapDrawable drawable = (BitmapDrawable) mImageView.getDrawable();
                         Bitmap bitmap = drawable.getBitmap();
-                        int pixel = bitmap.getPixel((int) event.getX(), (int) event.getY());
-
-                        int r = Color.red(pixel);
-                        int g = Color.green(pixel);
-                        int b = Color.blue(pixel);
-
-                        String hex = "#" + Integer.toHexString(pixel);
-
+                        model.setX((int)event.getX());
+                        model.setY((int)event.getY());
+                        model.setPixel(bitmap.getPixel(model.getX(),model.getY()));
+                        model.setRed(Color.red(model.getPixel()));
+                        model.setGreen(Color.green(model.getPixel()));
+                        model.setBlue(Color.blue(model.getPixel()));
                         Model color = new Model();
-                        String colors = color.getComplementaryColor(pixel);
-
-                        model.setRed(Color.red(pixel));
-                        model.setGreen(Color.green(pixel));
-                        model.setBlue(Color.blue(pixel));
-                        model.setHex("#" + Integer.toHexString(pixel));
+                        model.setColor(color.getColorNameFromRgb(model.getRed(),model.getGreen(),model.getBlue()));
                         reff.push().setValue(model);
-                        Toast.makeText(MainActivity.this,"data inserted successfully",Toast.LENGTH_LONG).show();
+                        Toast.makeText(MainActivity.this,"Data Inserted Successfully",Toast.LENGTH_LONG).show();
 
-                        mResultTv.setText("RGB: " + r + "," + g + "," + b + "\nHEX: " + hex + "\nColor: " + colors);
+                        mResultTv.setText("RGB: " + model.getRed() + "," + model.getGreen() + "," + model.getBlue() + "\nColor: " + model.getColor());
 
                     }
                 }catch (Exception e) {
